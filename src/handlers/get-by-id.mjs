@@ -1,6 +1,6 @@
 // Create clients and set shared const values outside of the handler.
 
-// Create a DocumentClient that represents the query to add an item
+// Create a DocumentClient that represents the query to add an ingress
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 const client = new DynamoDBClient({});
@@ -10,7 +10,7 @@ const ddbDocClient = DynamoDBDocumentClient.from(client);
 const tableName = process.env.SAMPLE_TABLE;
 
 /**
- * A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
+ * A simple example includes a HTTP get method to get one ingress by id from a DynamoDB table.
  */
 export const getByIdHandler = async (event) => {
   if (event.httpMethod !== 'GET') {
@@ -22,7 +22,7 @@ export const getByIdHandler = async (event) => {
   // Get id from pathParameters from APIGateway because of `/{id}` at template.yaml
   const id = event.pathParameters.id;
  
-  // Get the item from the table
+  // Get the ingress from the table
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property
   var params = {
     TableName : tableName,
@@ -31,14 +31,14 @@ export const getByIdHandler = async (event) => {
 
   try {
     const data = await ddbDocClient.send(new GetCommand(params));
-    var item = data.Item;
+    var ingress = data.Ingress;
   } catch (err) {
     console.log("Error", err);
   }
  
   const response = {
     statusCode: 200,
-    body: JSON.stringify(item)
+    body: JSON.stringify(ingress)
   };
  
   // All log statements are written to CloudWatch

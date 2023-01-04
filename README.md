@@ -68,8 +68,7 @@ Test a single function by invoking it directly with a test event. An event is a 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-my-application$ sam local invoke putItemFunction --event events/event-post-item.json
-my-application$ sam local invoke getAllItemsFunction --event events/event-get-all-items.json
+sam local invoke getAllIngressesFunction --event events/event-get-all-ingresses.json
 ```
 
 The AWS SAM CLI can also emulate your application's API. Use the `sam local start-api` command to run the API locally on port 3000.
@@ -102,7 +101,7 @@ Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-all-items.getAllItemsHandler
+    Handler: src/handlers/get-all-ingresses.getAllIngressesHandler
       Runtime: nodejs18.x
       DeadLetterQueue:
         Type: SQS 

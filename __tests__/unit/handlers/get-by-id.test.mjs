@@ -1,10 +1,7 @@
-// Import getByIdHandler function from get-by-id.mjs 
 import { getByIdHandler } from '../../../src/handlers/get-by-id.mjs'; 
-// Import dynamodb from aws-sdk 
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 import { mockClient } from "aws-sdk-client-mock";
  
-// This includes all tests for getByIdHandler() 
 describe('Test getByIdHandler', () => { 
     const ddbMock = mockClient(DynamoDBDocumentClient);
  
@@ -13,12 +10,12 @@ describe('Test getByIdHandler', () => {
       });
  
     // This test invokes getByIdHandler() and compare the result  
-    it('should get item by id', async () => { 
-        const item = { id: 'id1' }; 
+    it('should get ingress by id', async () => {
+        const ingress = { id: 'id1' };
  
         // Return the specified value whenever the spied get function is called 
         ddbMock.on(GetCommand).resolves({
-            Item: item,
+            Ingress: ingress,
         }); 
  
         const event = { 
@@ -29,15 +26,15 @@ describe('Test getByIdHandler', () => {
         };
  
         // Invoke getByIdHandler() 
-        const result = await getByIdHandler(event); 
+        const result = await getByIdHandler(event);
  
         const expectedResult = { 
             statusCode: 200, 
-            body: JSON.stringify(item) 
-        }; 
+            body: JSON.stringify(ingress)
+        };
  
-        // Compare the result with the expected result 
-        expect(result).toEqual(expectedResult); 
+        // Compare the result with the expected result
+        expect(result).toEqual(expectedResult);
     }); 
 }); 
  
